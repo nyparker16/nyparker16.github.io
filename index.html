@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Soo-Ho Park: computer science student at UBC, research assistant at the UBC Systopia Lab, and software engineer. Projects, research, resume and transcripts.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d5c70'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='700' fill='white' text-anchor='middle'%3ESP%3C/text%3E%3C/svg%3E">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px system-ui, -apple-system, "Segoe UI", sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<title>Soo-Ho Park</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one left-aligned reading column under a sticky name bar; each project is a case file — facts strip, media stage, then notes. */
+:root {
+  --paper: #f5f7f6;
+  --surface: #ffffff;
+  --ink: #15201d;
+  --muted: #56645f;
+  --rule: #d6dedb;
+  --accent: #1d5c70;
+  --accent-soft: #e2eef1;
+  --stage: #e8edeb;
+  --warn-ink: #8a5300;
+  --warn-bg: #fdf1dc;
+  --warn-line: #efd29c;
+
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.2rem, 5vw, 3.4rem);
+  --col: 46rem;
+  --wide: 68rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101614; --surface: #17201d; --ink: #e4ebe8; --muted: #9aa9a3;
+    --rule: #2a3632; --accent: #7cc0d3; --accent-soft: #1b3038; --stage: #1a2421;
+    --warn-ink: #f0bc6a; --warn-bg: #33270f; --warn-line: #5a431a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #101614; --surface: #17201d; --ink: #e4ebe8; --muted: #9aa9a3;
+  --rule: #2a3632; --accent: #7cc0d3; --accent-soft: #1b3038; --stage: #1a2421;
+    --warn-ink: #f0bc6a; --warn-bg: #33270f; --warn-line: #5a431a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--paper);
+}
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, video:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+
+.gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Top bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.bar-inner {
+  max-width: var(--wide); margin: 0 auto; padding-block: 14px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap;
+}
+.wordmark { font-family: var(--display); font-weight: 700; font-size: 1.15rem; text-decoration: none; color: var(--ink); }
+.wordmark span { color: var(--muted); font-weight: 500; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; }
+nav a {
+  font-family: var(--mono); font-size: var(--step--1); text-decoration: none; color: var(--muted);
+  padding: 6px 10px; border-radius: 999px;
+}
+nav a:hover { color: var(--ink); }
+nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+
+main { max-width: var(--wide); margin: 0 auto; padding-block: 48px 80px; }
+.view { display: grid; gap: 48px; }
+.view[hidden] { display: none; }
+
+.page-head { display: grid; gap: 14px; max-width: var(--col); }
+.eyebrow { font-family: var(--mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.page-head h1 { font-size: var(--step-3); }
+.lede { font-size: var(--step-1); line-height: 1.5; color: var(--muted); max-width: 40rem; }
+
+/* Placeholders for content still to come */
+.todo {
+  border: 1.5px dashed var(--rule); border-radius: 10px; padding: 20px 22px;
+  display: grid; gap: 8px; color: var(--muted); background: transparent;
+}
+.todo strong { font-family: var(--mono); font-size: var(--step--1); font-weight: 500; color: var(--ink); letter-spacing: 0.04em; text-transform: uppercase; }
+.todo ul { margin: 0; padding-left: 1.1em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.photo-slot {
+  aspect-ratio: 4 / 5; max-width: 100%; border-radius: 10px; border: 1.5px dashed var(--rule);
+  display: grid; place-items: center; font-family: var(--mono); font-size: var(--step--1); color: var(--muted);
+}
+.photo-slot.tall { grid-row: span 2; aspect-ratio: auto; }
+.photo { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; background: var(--stage); }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 20px; margin: 0; font-size: 0.98rem; }
+.facts dt { font-family: var(--mono); font-size: var(--step--1); color: var(--muted); padding-top: 2px; }
+.facts dd { margin: 0; }
+.about-copy { display: grid; gap: 24px; }
+.bio { display: grid; gap: 14px; max-width: 40rem; }
+.selectable { user-select: all; }
+.next-links { display: flex; gap: 10px; flex-wrap: wrap; }
+.next-links a {
+  font-family: var(--mono); font-size: var(--step--1); text-decoration: none;
+  border: 1px solid var(--rule); border-radius: 999px; padding: 8px 14px; color: var(--ink);
+}
+.next-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Projects */
+.project { display: grid; gap: 28px; padding-top: 40px; border-top: 1px solid var(--rule); }
+.project-head { display: grid; gap: 10px; }
+.project-head h2 { font-size: var(--step-2); }
+.project-head .summary { font-size: var(--step-1); line-height: 1.45; max-width: 44rem; }
+.strip {
+  display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0;
+  font-family: var(--mono); font-size: var(--step--1); color: var(--muted);
+}
+.strip div { display: flex; gap: 6px; }
+.strip dt { color: var(--muted); }
+.strip dd { margin: 0; color: var(--ink); }
+
+.stage { background: var(--stage); border-radius: 14px; padding: clamp(12px, 3vw, 28px); display: grid; gap: 14px; }
+.stage video, .stage img { display: block; width: 100%; max-width: 100%; height: auto; border-radius: 8px; background: var(--surface); }
+.stage-desktop { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.stage-desktop .thumbs { display: grid; gap: 14px; }
+.stage-phone { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 2vw, 18px); align-items: start; }
+.phone { border-radius: 18px; overflow: hidden; border: 1px solid var(--rule); background: var(--surface); }
+.phone video, .phone img { border-radius: 0; }
+figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
+figcaption { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.stage-note { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+.notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.note { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.note h3 { font-size: 1rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.note p, .note li { font-size: 1rem; }
+.note ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+
+.specimen {
+  font-family: var(--mono); font-size: 0.82rem; background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 8px; padding: 12px 14px; overflow-x: auto; display: grid; gap: 4px; line-height: 1.5;
+}
+.specimen .in { color: var(--muted); }
+.specimen .out { color: var(--accent); }
+.syllabics { font-size: 1.6rem; letter-spacing: 0.12em; font-family: var(--body); color: var(--ink); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+.chips li { font-family: var(--mono); font-size: 0.75rem; padding: 4px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+.project-links { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--mono); font-size: var(--step--1); }
+
+.title-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.04em;
+  color: var(--warn-ink); background: var(--warn-bg); border: 1px solid var(--warn-line);
+  border-radius: 999px; padding: 4px 11px;
+}
+.status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--warn-ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .status .dot { animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: 0.35; } }
+}
+.stage-solo { max-width: 48rem; }
+.stage-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(8px, 2vw, 18px); align-items: start; max-width: 40rem; }
+.stage-tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 2vw, 18px); align-items: start; }
+.legend { list-style: none; padding: 0 !important; display: grid; gap: 8px; }
+.legend li { display: flex; align-items: center; gap: 10px; }
+.sw { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.sw.ring { width: 16px; height: 16px; border: 1.5px solid var(--ink); }
+.sw.sq { border-radius: 2px; border: 2px solid; background: transparent; width: 14px; height: 14px; }
+
+/* Research */
+#view-research .page-head { max-width: 52rem; }
+#view-research .page-head h1 { font-size: clamp(2rem, 4.2vw, 3rem); }
+.authors { font-family: var(--mono); font-size: var(--step--1); color: var(--muted); line-height: 1.5; }
+.research-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.research-text { display: grid; gap: 40px; min-width: 0; }
+.r-block { display: grid; gap: 14px; min-width: 0; }
+.r-block h2 { font-size: var(--step-1); }
+.r-block p, .r-block li { max-width: 40rem; }
+.r-block ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; }
+code { font-family: var(--mono); font-size: 0.88em; }
+.code-fig { margin: 0; min-width: 0; }
+.code {
+  margin: 0; font-family: var(--mono); font-size: 0.8rem; line-height: 1.55;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; color: var(--ink);
+}
+.code .c { color: var(--muted); }
+.poster { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); }
+.poster img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); }
+.results { padding-top: 40px; border-top: 1px solid var(--rule); }
+.charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.charts figcaption { font-family: var(--body); font-size: 0.95rem; color: var(--ink); line-height: 1.5; }
+.charts figcaption strong { font-weight: 600; }
+.plate { background: #ffffff; border: 1px solid var(--rule); border-radius: 8px; padding: 6px; }
+.plate img { display: block; width: 100%; height: auto; }
+.next { list-style: none; padding: 0 !important; display: flex !important; flex-wrap: wrap; gap: 8px !important; }
+.next li { border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; font-size: 0.95rem; }
+
+/* Resume */
+.tr-pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 64rem; }
+.tr-pages.single { grid-template-columns: minmax(0, 1fr); max-width: 32rem; }
+.tr-pages figure { margin: 0; display: grid; gap: 6px; }
+.tr-pages img { width: 100%; height: auto; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; }
+.resume-sheet { margin: 0; display: grid; gap: 10px; max-width: 54rem; }
+.resume-sheet img { width: 100%; height: auto; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -18px rgb(0 0 0 / 0.25); }
+#view-transcripts .page-head p.lede { font-size: var(--step-0); }
+.transcripts h2 { font-size: var(--step-2); }
+.tr-note { color: var(--muted); font-size: 0.98rem; }
+.tr-block { display: grid; gap: 16px; }
+.tr-head { display: grid; gap: 6px; }
+.tr-head h2 { font-size: var(--step-1); }
+.tr-head p { color: var(--muted); }
+.tr-stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 6px 0 0; }
+.tr-stats div { display: grid; gap: 2px; }
+.tr-stats dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.tr-stats dd { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
+.tr-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; min-width: 34rem; }
+.tr-table th, .tr-table td { text-align: left; padding: 8px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.tr-table thead th { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.tr-table tr.term th { font-family: var(--mono); font-size: 0.78rem; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-bottom: 1px solid var(--rule); }
+.tr-table tbody tr:last-child td { border-bottom: 0; }
+.tr-table .code { font-family: var(--mono); font-size: 0.85rem; white-space: nowrap; }
+.tr-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tr-table .muted-row td { color: var(--muted); }
+
+footer { max-width: var(--wide); margin: 0 auto; padding-block: 28px 40px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: var(--step--1); color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+
+@media (max-width: 860px) {
+  .about-grid, .stage-desktop, .notes, .research-grid, .charts { grid-template-columns: minmax(0, 1fr); }
+  .poster { position: static; max-width: 28rem; }
+  .stage-phone { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stage-tri { grid-template-columns: minmax(0, 1fr); max-width: 24rem; }
+  .stage-duo { grid-template-columns: minmax(0, 1fr); max-width: 24rem; }
+  .tr-pages { grid-template-columns: minmax(0, 1fr); }
+  main { padding-block: 32px 64px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .view:not([hidden]) { animation: rise 0.35s ease-out; }
+  @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
+}
+</style>
+
+<header class="bar gutter">
+  <div class="bar-inner">
+    <a class="wordmark" href="#about">Soo-Ho Park <span>· Software Engineer</span></a>
+    <nav aria-label="Pages">
+      <a href="#about" data-view="about">About</a>
+      <a href="#research" data-view="research">Research</a>
+      <a href="#projects" data-view="projects">Projects</a>
+      <a href="#resume" data-view="resume">Resume</a>
+      <a href="#transcripts" data-view="transcripts">Transcripts</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gutter">
+
+  <!-- ABOUT -->
+  <section class="view" id="view-about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="about-copy">
+        <div class="page-head">
+          <p class="eyebrow">Computer Science · UBC Vancouver</p>
+          <h1 id="about-h">Soo-Ho Park</h1>
+        </div>
+        <div class="bio">
+          <p>Hello, I'm a third-year computer science student at UBC Vancouver. I work as an undergraduate research assistant at the UBC Systopia Lab, where I focus on verification of concurrent systems.</p>
+          <p>C++ is my strongest language. At Systopia I built a linearizability checker in C++ that validates execution traces of concurrent data structures, and on my own time I'm writing SkyOS, a freestanding x86 kernel in C++ that boots through GRUB.</p>
+          <p>I also like building things people use directly. With teammates, I've made a scheduler that indexes more than 6,000 City of Vancouver recreation programs, and a Plains Cree learning app built in 24 hours at SFU StormHacks.</p>
+          <p>My goal is to build software systems that are scalable, usable and correct. For my next co-op, I want to work alongside experienced software engineers and contribute to a system built with those goals in mind.</p>
+        </div>
+        <dl class="facts">
+          <dt>Studying</dt><dd>B.Sc. Computer Science, UBC (2024–2028)</dd>
+          <dt>Research</dt><dd>Undergraduate Research Assistant, UBC Systopia Lab</dd>
+          <dt>Teaching</dt><dd>Teaching Assistant, CPSC 213</dd>
+          <dt>Looking for</dt><dd>Software engineering co-op and internship roles</dd>
+          <dt>Languages</dt><dd>C++, C, Java, Python, SQL, JavaScript / TypeScript</dd>
+          <dt>Code</dt><dd><a href="https://github.com/nyparker16" target="_blank" rel="noopener">github.com/nyparker16</a></dd>
+          <dt>Email</dt><dd class="selectable">nyparker16@hotmail.com</dd>
+        </dl>
+        <div class="next-links">
+          <a href="#projects">See projects →</a>
+          <a href="#resume">Resume →</a>
+          <a href="#transcripts">Transcripts →</a>
+        </div>
+      </div>
+      <div class="photo-grid">
+        <img class="photo" src="media/photo_portrait.webp" alt="Portrait of Soo-Ho Park in a grey-green polo shirt" width="400" height="500">
+        <img class="photo" src="media/photo_evening.webp" alt="Soo-Ho Park and a companion holding red roses on a rainy evening, under string lights" width="720" height="960" loading="lazy">
+        <img class="photo" src="media/photo_beach.webp" alt="Soo-Ho Park smiling in Korean military uniform, kneeling beside a child on a beach" width="720" height="960" loading="lazy">
+        <img class="photo" src="media/photo_drums.webp" alt="Soo-Ho Park playing drums on stage under green lights" width="720" height="900" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="view" id="view-research" aria-labelledby="research-h" hidden>
+    <div class="page-head">
+      <p class="eyebrow">Research · UBC Systopia Lab · May 2026–present</p>
+      <h1 id="research-h">Verifying concurrent programs with timestamped atomics</h1>
+      <p class="lede">Concurrent code has to be correct under every possible interleaving of its threads. I'm building a way to check that quickly by giving every atomic operation a timestamp.</p>
+      <p class="authors">Soo-Ho Park, Finn Hackett, Yuanhao Wei and Ivan Beschastnikh · Undergraduate Student Research Award (USRA), Summer 2026</p>
+    </div>
+
+    <div class="research-grid">
+      <div class="research-text">
+        <section class="r-block" aria-labelledby="r-problem">
+          <h2 id="r-problem">The problem</h2>
+          <p>Atomic instructions like load, store and compare-and-swap (CAS) are indivisible on their own. But a data structure built from them, such as a lock-free stack, is only correct if every run behaves like some valid one-at-a-time ordering of its operations. This property is called linearizability.</p>
+          <p>Checking it usually means searching for such an ordering. With <i>n</i> overlapping operations there are up to <i>n</i>! orderings to try, so checking slows down sharply as threads are added.</p>
+        </section>
+
+        <section class="r-block" aria-labelledby="r-approach">
+          <h2 id="r-approach">The approach</h2>
+          <p>I implemented <code>TimestampedAtomic</code> in C++, a wrapper that stamps each load, store and CAS with a value from a shared clock. The stamp marks the operation's linearization point, so a checker can sort a trace by timestamp instead of searching all orderings.</p>
+          <ul>
+            <li><strong>V0, linked list:</strong> every store adds a node, so a load can walk back to the value that was current when it read the clock. Threads help finish each other's stamps, so stamping is wait-free.</li>
+            <li><strong>V1, single node:</strong> keeps only the latest value and frees old nodes safely with epoch-based reclamation.</li>
+          </ul>
+          <figure class="code-fig">
+            <pre class="code" aria-label="C++ source of TimestampedAtomic load in the V0 version"><code><span class="c">// V0 load(): read the clock, then find the value current at that time</span>
+std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
+    int read_ts = clock-&gt;get_timestamp();
+    Node* curr = head.load();
+    help_timestamp(curr);
+    while (curr != nullptr &amp;&amp; curr-&gt;timestamp.load() &gt; read_ts)
+        curr = curr-&gt;prev;
+    return {curr-&gt;val, read_ts};
+}</code></pre>
+          </figure>
+        </section>
+
+        <section class="r-block" aria-labelledby="r-proof">
+          <h2 id="r-proof">Proof of correctness</h2>
+          <p>I wrote a formal proof for V0 that contributes to a research paper. In six lemmas and four theorems, it shows that every interleaving of load, store and CAS is linearizable, and that sorting by timestamp always gives a valid linearization. The repository also includes a TLA+ model of the algorithm.</p>
+          <div class="project-links">
+            <a href="https://github.com/nyparker16/Fixed-Linearization-Point-Timestamps" target="_blank" rel="noopener">Code, TLA+ model and full proof on GitHub ↗</a>
+          </div>
+        </section>
+      </div>
+
+      <figure class="poster">
+        <img src="media/research_poster.webp" alt="Research poster: Verifying Concurrent Programs by Timestamping Atomic Operations to Specify Fixed Linearization Points" width="1400" height="2100" loading="lazy">
+        <figcaption>Poster presented at the UBC undergraduate research showcase, 2026</figcaption>
+    </figure>
+    </div>
+
+    <section class="r-block results" aria-labelledby="r-results">
+      <h2 id="r-results">Results</h2>
+      <p>Tested on a Treiber stack, a classic lock-free stack, with 1 to 5 threads. Each point is the mean of 10 runs.</p>
+      <div class="charts">
+        <figure>
+          <div class="plate"><img src="media/chart_validation_vs_timeboxing.webp" alt="Line chart of validation time in seconds against threads. Timeboxing alone rises to about 26 seconds at 5 threads; timeboxing with TimestampedV0 stays near 4 seconds." width="1200" height="742" loading="lazy"></div>
+          <figcaption><strong>Faster checking.</strong> At 5 threads, adding timestamps cuts validation from about 26 s to about 4 s.</figcaption>
+        </figure>
+        <figure>
+          <div class="plate"><img src="media/chart_validation_timestamped.webp" alt="Line chart of TimestampedAtomic validation time, rising from about 22 milliseconds at 1 thread to about 29 milliseconds at 5 threads." width="1200" height="742" loading="lazy"></div>
+          <figcaption><strong>Barely grows with threads.</strong> Sorting by timestamp alone stays between about 22 and 29 ms from 1 to 5 threads.</figcaption>
+        </figure>
+        <figure>
+          <div class="plate"><img src="media/chart_runtime_overhead.webp" alt="Line chart of run time in milliseconds for 10,000 operations per thread. At 5 threads: base about 7 ms, TimestampedAtomic V0 and V1 about 45 ms, timeboxing about 210 ms, timeboxing with TimestampedV0 about 128 ms." width="1200" height="742" loading="lazy"></div>
+          <figcaption><strong>The cost.</strong> Stamping adds run-time overhead: about 45 ms versus 7 ms uninstrumented, for 10,000 operations per thread at 5 threads.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="r-block" aria-labelledby="r-next">
+      <h2 id="r-next">Next steps</h2>
+      <ul class="next">
+        <li>Prove V1 correct</li>
+        <li>Build V2, which removes the extra pointer hop to reach the current value</li>
+        <li>Timestamp more instructions, such as fetch_add and fetch_sub</li>
+        <li>Handle linearization points that aren't fixed in advance</li>
+      </ul>
+    </section>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="view" id="view-projects" aria-labelledby="projects-h" hidden>
+    <div class="page-head">
+      <p class="eyebrow">Projects</p>
+      <h1 id="projects-h">Things I've built</h1>
+      <p class="lede">An operating system kernel, two team projects and a simulation, each with a short demo recorded from the running code.</p>
+    </div>
+
+    <article class="project" aria-labelledby="p0">
+      <div class="project-head">
+        <p class="eyebrow">Operating system · Jul 2026–present</p>
+        <div class="title-row">
+          <h2 id="p0">SkyOS</h2>
+          <span class="status"><span class="dot" aria-hidden="true"></span>In progress</span>
+        </div>
+        <p class="summary">A freestanding x86 kernel written in C++. It runs with no operating system or standard library underneath, and boots from a floppy image through GRUB.</p>
+        <dl class="strip">
+          <div><dt>Built</dt><dd>Solo</dd></div>
+          <div><dt>Toolchain</dt><dd>MSVC, GRUB 0.95, QEMU</dd></div>
+          <div><dt>Kernel size</dt><dd>25 KB</dd></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <div class="stage-solo">
+          <figure>
+            <video controls muted playsinline preload="metadata" poster="media/skyos_grub.webp" aria-label="Demo of GRUB loading SkyOS in QEMU">
+              <source src="media/skyos-demo.mp4" type="video/mp4">
+            </video>
+            <figcaption>Demo · 11 s · current build: GRUB's menu, then SkyOS takes over the screen</figcaption>
+          </figure>
+        </div>
+        <p class="stage-note">Work in progress: this build boots and prints to the screen. More features are being added.</p>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <h3>What it does</h3>
+          <p>GRUB loads the kernel into memory at 1 MiB and jumps to it. From there SkyOS owns the machine: no C runtime, no system calls, nothing to fall back on. Right now it boots and writes to the screen, the base for everything that comes next.</p>
+        </div>
+        <div class="note">
+          <h3>How it works</h3>
+          <ul>
+            <li>Written in C++ with x86 assembly, built by Microsoft's compiler into a Windows-style PE executable.</li>
+            <li>The default C runtime is switched off, so the binary runs on bare hardware.</li>
+            <li>The memory layout and alignment are set by hand so GRUB can load the file.</li>
+            <li>Packaged into a bootable disk image and run under QEMU.</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h3>The tricky part</h3>
+          <p>GRUB doesn't understand Windows executables. The kernel carries a Multiboot header whose "a.out kludge" flag tells GRUB exactly where to load it and where to start.</p>
+          <div class="specimen" aria-label="Multiboot header fields read from the SkyOS binary">
+            <span class="in">magic      0x1BADB002</span>
+            <span class="in">flags      0x00010003</span>
+            <span class="out">→ bit 16 set: use the addresses below</span>
+            <span class="in">load_addr  0x00100000</span>
+            <span class="in">entry      0x00100420</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="chips" aria-label="Technologies">
+        <li>C++</li><li>x86 assembly</li><li>MSVC</li><li>Multiboot</li><li>GRUB</li><li>QEMU</li>
+      </ul>
+    </article>
+
+    <article class="project" aria-labelledby="p1">
+      <div class="project-head">
+        <p class="eyebrow">Web app · Aug 2025</p>
+        <h2 id="p1">Vancouver Recreation Scheduler</h2>
+        <p class="summary">Finds City of Vancouver recreation programs by age, day and community centre, then lays the ones you pick onto a weekly calendar.</p>
+        <dl class="strip">
+          <div><dt>Team</dt><dd>3 people</dd></div>
+          <div><dt>My part</dt><dd>Scraper, data pipeline and search API</dd></div>
+          <div><dt>Data</dt><dd>6,000+ city program listings</dd></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <div class="stage-desktop">
+          <figure>
+            <video controls muted playsinline preload="metadata" poster="media/scheduler_search_weekend.webp" aria-label="Demo of searching activities and building a weekly schedule">
+              <source src="media/scheduler-demo.mp4" type="video/mp4">
+            </video>
+            <figcaption>Demo · 24 s · search by age 5–12 on weekends, then build a week</figcaption>
+          </figure>
+          <div class="thumbs">
+            <figure>
+              <img src="media/scheduler_search_filtered.webp" alt="Search results filtered to Trout Lake and Kitsilano on Mon, Wed, Sat and Sun" loading="lazy" width="1280" height="800">
+              <figcaption>Filtered search</figcaption>
+            </figure>
+            <figure>
+              <img src="media/scheduler_weekly_grid.webp" alt="Weekly grid with two overlapping Thursday classes placed side by side" loading="lazy" width="1280" height="800">
+              <figcaption>Overlapping classes share a time slot</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p class="stage-note">Demo runs on sample activity data.</p>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <h3>What it does</h3>
+          <p>Parents juggling several kids' activities can filter hundreds of city programs at once instead of clicking through listings one by one, then see the whole week at a glance.</p>
+        </div>
+        <div class="note">
+          <h3>How it works</h3>
+          <ul>
+            <li>A headless Selenium scraper works through the city's infinite-scroll search and collects every listing.</li>
+            <li>Dates, times and age ranges are normalized with regex and loaded into Azure SQL.</li>
+            <li>A Flask REST API runs parameterized queries through pyodbc to filter by age overlap, weekday and location.</li>
+            <li>The React calendar assigns overlapping classes to separate lanes.</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h3>The tricky part</h3>
+          <p>The city writes ages and times as free text, so the scraper turns them into numbers.</p>
+          <div class="specimen" aria-label="Examples of age and time parsing">
+            <span class="in">"Age at least 6y but less than 9y"</span>
+            <span class="out">→ min 6.0, max 9.0</span>
+            <span class="in">"18 m +"</span>
+            <span class="out">→ min 1.5, max 150</span>
+            <span class="in">"Sat 11:30 AM - Noon"</span>
+            <span class="out">→ Sat 11:30–12:00</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="chips" aria-label="Technologies">
+        <li>Python</li><li>Selenium</li><li>Azure SQL</li><li>Flask</li><li>React</li><li>Vite</li><li>Material UI</li>
+      </ul>
+      <div class="project-links">
+        <a href="https://github.com/nyparker16/VancouverRecreationalActivitiesScheduler" target="_blank" rel="noopener">Source on GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="project" aria-labelledby="p2">
+      <div class="project-head">
+        <p class="eyebrow">Mobile app · SFU StormHacks 2025</p>
+        <h2 id="p2">Cree Learner</h2>
+        <p class="summary">A mobile app for learning Plains Cree vocabulary: tap syllabics to hear them, memorize words with audio pronunciation, and get your speaking scored.</p>
+        <dl class="strip">
+          <div><dt>Built in</dt><dd>24 hours</dd></div>
+          <div><dt>My part</dt><dd>Flask REST API and Azure data</dd></div>
+          <div><dt>Platforms</dt><dd>iOS and Android</dd></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <div class="stage-phone">
+          <figure>
+            <div class="phone">
+              <video controls muted playsinline preload="metadata" poster="media/cree_alphabet.webp" aria-label="Demo of the syllabics chart, word practice and community page">
+                <source src="media/cree-learner-demo.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption>Demo · 23 s</figcaption>
+          </figure>
+          <figure>
+            <div class="phone"><img src="media/cree_alphabet.webp" alt="Syllabics chart with the syllable o highlighted and its sound shown" loading="lazy" width="520" height="1125"></div>
+            <figcaption>Syllabics chart</figcaption>
+          </figure>
+          <figure>
+            <div class="phone"><img src="media/cree_words.webp" alt="Word card for wâpos, meaning rabbit or hare, with record and next-word buttons" loading="lazy" width="520" height="1125"></div>
+            <figcaption>Word practice</figcaption>
+          </figure>
+          <figure>
+            <div class="phone"><img src="media/cree_donation.webp" alt="Support the Community page with a donate button and language facts" loading="lazy" width="520" height="1125"></div>
+            <figcaption>Community support</figcaption>
+          </figure>
+        </div>
+        <p class="stage-note">Demo recorded without the Azure services, so it uses sample words and doesn't show pronunciation scoring.</p>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <h3>What it does</h3>
+          <p>Cree is written in syllabics, where each symbol's shape and rotation encode a consonant and vowel. The app turns the chart into something you can tap and hear.</p>
+          <p class="syllabics" aria-label="Cree syllabics for a, i, o, e">ᐊ ᐃ ᐅ ᐁ</p>
+        </div>
+        <div class="note">
+          <h3>How it works</h3>
+          <ul>
+            <li>React Native app in TypeScript with tab navigation.</li>
+            <li>A Flask REST API serves word entries from Azure SQL.</li>
+            <li>Pronunciation audio is stored as blobs in Azure Blob Storage.</li>
+            <li>Recordings are converted to 16 kHz mono WAV and scored by Azure's pronunciation assessment.</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h3>My part</h3>
+          <p>I built the backend: the Flask API the app calls for each word, the Azure SQL table of word entries, and the Blob Storage container that holds the pronunciation recordings.</p>
+        </div>
+      </div>
+
+      <ul class="chips" aria-label="Technologies">
+        <li>React Native</li><li>TypeScript</li><li>Python</li><li>Flask</li><li>Azure SQL</li><li>Azure Blob Storage</li><li>Azure Speech</li>
+      </ul>
+      <div class="project-links">
+        <a href="https://github.com/slee417/Cree-Learner" target="_blank" rel="noopener">Source on GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="project" aria-labelledby="p3">
+      <div class="project-head">
+        <p class="eyebrow">Course project · CPSC 1045, Langara College · Fall 2022</p>
+        <h2 id="p3">Infection Simulator</h2>
+        <p class="summary">A disease-spread simulation in the browser. Set the population, the share infected and the number of time steps, then watch the infection spread while immune carriers race to a lab to create a vaccine.</p>
+        <dl class="strip">
+          <div><dt>Built with</dt><dd>JavaScript and SVG</dd></div>
+          <div><dt>Inputs</dt><dd>People, % infected, time steps</dd></div>
+          <div><dt>Runs in</dt><dd>Any browser, no libraries</dd></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <div class="stage-duo">
+          <figure>
+            <video controls muted playsinline preload="metadata" poster="media/infection_end.webp" aria-label="Demo of a simulation run with 150 people, 10 percent infected and 40 time steps">
+              <source src="media/infection-sim-demo.mp4" type="video/mp4">
+            </video>
+            <figcaption>Demo · 33 s · 150 people, 10% infected, 40 steps</figcaption>
+          </figure>
+          <figure>
+            <img src="media/infection_end.webp" alt="End of run: blue vaccinated dots spreading from the hospital, with the result 47 survivors to 103 infected, Disease wins" loading="lazy" width="560" height="800">
+            <figcaption>Final count: 47 survivors, 103 infected</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <h3>What it does</h3>
+          <p>At the end of the run it counts survivors against the infected and declares a winner. More time steps give the vaccine longer to spread, so survivors are more likely to win.</p>
+        </div>
+        <div class="note">
+          <h3>How it works</h3>
+          <ul>
+            <li>Each step, every person takes a small random step.</li>
+            <li>Every pair closer than 8 pixels counts as a contact, and infection passes between them.</li>
+            <li>Immune carriers, 2% of the population, walk straight to the lab. When half arrive, the vaccine is created.</li>
+            <li>Vaccinated people leave the hospital and vaccinate everyone they touch.</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h3>Legend</h3>
+          <ul class="legend">
+            <li><span class="sw" style="background:#2e8b2e"></span>Healthy</li>
+            <li><span class="sw" style="background:#e02424"></span>Infected</li>
+            <li><span class="sw ring" style="background:#f2d01c"></span>Immune carrier</li>
+            <li><span class="sw" style="background:#1f3fd6"></span>Vaccinated</li>
+            <li><span class="sw sq" style="border-color:#2e8b2e"></span>Hospital</li>
+            <li><span class="sw sq" style="border-color:#1f3fd6"></span>Laboratory</li>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="chips" aria-label="Technologies">
+        <li>JavaScript</li><li>SVG</li><li>HTML</li><li>CSS</li>
+      </ul>
+      <div class="project-links">
+        <a href="https://github.com/nyparker16/InfectionSimulator" target="_blank" rel="noopener">Source on GitHub ↗</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- RESUME -->
+  <section class="view" id="view-resume" aria-labelledby="resume-h" hidden>
+    <div class="page-head">
+      <p class="eyebrow">Resume</p>
+      <h1 id="resume-h">Resume</h1>
+      <p class="lede">My one-page resume. My UBC and Langara College transcripts are on the <a href="#transcripts">Transcripts</a> page.</p>
+    </div>
+
+    <figure class="resume-sheet">
+      <img src="media/resume.webp" alt="Resume of Soo-Ho Park: education at UBC and Langara College, experience as a research assistant at UBC Systopia Lab, teaching assistant for CPSC 213 and academic group tutor, projects SkyOS, Cree Learner and the Vancouver Recreational Activities Scheduler, and technical skills." width="1400" height="1812" loading="lazy">
+      <figcaption>Resume · November 2026 · phone number available on request</figcaption>
+      
+    </figure>
+
+  </section>
+
+  <!-- TRANSCRIPTS -->
+  <section class="view" id="view-transcripts" aria-labelledby="transcripts-h" hidden>
+      <div class="page-head">
+      <p class="eyebrow">Transcripts</p>
+      <h1 id="transcripts-h">Transcripts</h1>
+      <p class="lede">Unofficial transcripts. My student number, college ID, date of birth and address are hidden. Official copies are available on request.</p>
+    </div>
+
+    <div class="tr-block">
+      <div class="tr-head">
+        <h2>University of British Columbia</h2>
+        <p>B.Sc. Computer Science · 2024–2028 (expected) · 80 transfer credits from Langara</p>
+        <dl class="tr-stats">
+          <div><dt>Cumulative average</dt><dd>94.3%</dd></div>
+          <div><dt>Credits earned</dt><dd>49</dd></div>
+          <div><dt>Award</dt><dd>Trek Excellence Scholarship</dd></div>
+        </dl>
+      </div>
+      <div class="tr-pages single">
+        <figure><img src="media/transcript_ubc-1.webp" alt="UBC unofficial transcript, page 1 of 2: transfer credits and courses from 2024-25 Winter through 2026-27 Winter Term 1, cumulative average 94.3 percent" width="1400" height="1812" loading="lazy"><figcaption>Unofficial transcript</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="tr-block">
+      <div class="tr-head">
+        <h2>Langara College</h2>
+        <p>Associate of Science, Computer Science · 2022–2024</p>
+        <dl class="tr-stats">
+          <div><dt>Cumulative GPA</dt><dd>4.33 / 4.33</dd></div>
+          <div><dt>Credits</dt><dd>43</dd></div>
+          <div><dt>Every course</dt><dd>A+</dd></div>
+        </dl>
+      </div>
+      <div class="tr-pages single">
+        <figure><img src="media/transcript_lang-1.webp" alt="Langara College transcript of academic record: 13 courses from Fall 2022 to Spring 2024, all A plus, cumulative GPA 4.33" width="1400" height="1812" loading="lazy"><figcaption>Transcript of Academic Record</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="gutter">
+  <span>© 2026 Soo-Ho Park</span>
+  <a href="https://github.com/nyparker16" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+<script>
+(function () {
+  var views = ["about", "research", "projects", "resume", "transcripts"];
+  function show() {
+    var name = (location.hash || "").replace("#", "");
+    if (views.indexOf(name) === -1) name = "about";
+    views.forEach(function (v) {
+      document.getElementById("view-" + v).hidden = v !== name;
+    });
+    document.querySelectorAll("nav a").forEach(function (a) {
+      if (a.dataset.view === name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    document.querySelectorAll("video").forEach(function (v) { v.pause(); });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", show);
+  show();
+})();
+</script>
+
+</body>
+</html>
