@@ -99,11 +99,11 @@ nav a {
   padding: 6px 10px; border-radius: 999px;
 }
 nav a:hover { color: var(--ink); }
-nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+nav a[aria-current] { background: var(--accent-soft); color: var(--accent); }
 
 main { max-width: var(--wide); margin: 0 auto; padding-block: 48px 80px; }
-.view { display: grid; gap: 48px; }
-.view[hidden] { display: none; }
+.view { display: grid; gap: 48px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); }
+.view + .view { margin-top: 88px; padding-top: 72px; border-top: 1px solid var(--rule); }
 
 .page-head { display: grid; gap: 14px; max-width: var(--col); }
 .eyebrow { font-family: var(--mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -230,8 +230,8 @@ figcaption { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); 
 .jump:hover { border-color: var(--accent); }
 .jump:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 #r-results { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 84px); }
-#view-research .page-head { max-width: 52rem; }
-#view-research .page-head h1 { font-size: clamp(2rem, 4.2vw, 3rem); }
+#research .page-head { max-width: 52rem; }
+#research .page-head h1 { font-size: clamp(2rem, 4.2vw, 3rem); }
 .authors { font-family: var(--mono); font-size: var(--step--1); color: var(--muted); line-height: 1.5; }
 .research-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: start; }
 .research-text { display: grid; gap: 40px; min-width: 0; }
@@ -273,7 +273,7 @@ code { font-family: var(--mono); font-size: 0.88em; }
 .tr-pages img { width: 100%; height: auto; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; }
 .resume-sheet { margin: 0; display: grid; gap: 10px; max-width: 54rem; }
 .resume-sheet img { width: 100%; height: auto; background: #ffffff; border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -18px rgb(0 0 0 / 0.25); }
-#view-transcripts .page-head p.lede { font-size: var(--step-0); }
+#transcripts .page-head p.lede { font-size: var(--step-0); }
 .transcripts h2 { font-size: var(--step-2); }
 .tr-note { color: var(--muted); font-size: 0.98rem; }
 .tr-block { display: grid; gap: 16px; }
@@ -308,8 +308,6 @@ footer a { color: var(--muted); }
   main { padding-block: 32px 64px; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .view:not([hidden]) { animation: rise 0.35s ease-out; }
-  @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
 }
 </style>
 
@@ -329,7 +327,7 @@ footer a { color: var(--muted); }
 <main class="gutter">
 
   <!-- ABOUT -->
-  <section class="view" id="view-about" aria-labelledby="about-h">
+  <section class="view" id="about" aria-labelledby="about-h">
     <div class="about-grid">
       <div class="about-copy">
         <div class="page-head">
@@ -352,7 +350,8 @@ footer a { color: var(--muted); }
           <dt>Email</dt><dd class="selectable">nyparker16@hotmail.com</dd>
         </dl>
         <div class="next-links">
-          <a href="#projects">See projects →</a>
+          <a href="#research">Research →</a>
+          <a href="#projects">Projects →</a>
           <a href="#resume">Resume →</a>
           <a href="#transcripts">Transcripts →</a>
         </div>
@@ -368,7 +367,7 @@ footer a { color: var(--muted); }
   </section>
 
   <!-- RESEARCH -->
-  <section class="view" id="view-research" aria-labelledby="research-h" hidden>
+  <section class="view" id="research" aria-labelledby="research-h">
     <div class="page-head">
       <p class="eyebrow">Research · UBC Systopia Lab · May 2026–present</p>
       <h1 id="research-h">Verifying concurrent programs with timestamped atomics</h1>
@@ -467,7 +466,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
   </section>
 
   <!-- PROJECTS -->
-  <section class="view" id="view-projects" aria-labelledby="projects-h" hidden>
+  <section class="view" id="projects" aria-labelledby="projects-h">
     <div class="page-head">
       <p class="eyebrow">Projects</p>
       <h1 id="projects-h">Things I've built</h1>
@@ -737,11 +736,11 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
   </section>
 
   <!-- RESUME -->
-  <section class="view" id="view-resume" aria-labelledby="resume-h" hidden>
+  <section class="view" id="resume" aria-labelledby="resume-h">
     <div class="page-head">
       <p class="eyebrow">Resume</p>
       <h1 id="resume-h">Resume</h1>
-      <p class="lede">My one-page resume. My UBC and Langara College transcripts are on the <a href="#transcripts">Transcripts</a> page.</p>
+      <p class="lede">My one-page resume. My UBC and Langara College transcripts are in the <a href="#transcripts">Transcripts</a> section below.</p>
     </div>
 
     <figure class="resume-sheet">
@@ -754,7 +753,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
   </section>
 
   <!-- TRANSCRIPTS -->
-  <section class="view" id="view-transcripts" aria-labelledby="transcripts-h" hidden>
+  <section class="view" id="transcripts" aria-labelledby="transcripts-h">
       <div class="page-head">
       <p class="eyebrow">Transcripts</p>
       <h1 id="transcripts-h">Transcripts</h1>
@@ -801,21 +800,65 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
 
 <script>
 (function () {
-  var views = ["about", "research", "projects", "resume", "transcripts"];
-  function show() {
-    var name = (location.hash || "").replace("#", "");
-    if (views.indexOf(name) === -1) name = "about";
-    views.forEach(function (v) {
-      document.getElementById("view-" + v).hidden = v !== name;
+  var ids = ["about", "research", "projects", "resume", "transcripts"];
+  var sections = ids.map(function (id) { return document.getElementById(id); });
+  var navLinks = document.querySelectorAll("nav a");
+  var bar = document.querySelector(".bar");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function goTo(el) {
+    var start = window.scrollY;
+    el.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "start" });
+    // Some browsers ignore smooth scrolling; jump straight there if nothing moved.
+    setTimeout(function () {
+      if (window.scrollY === start) el.scrollIntoView({ behavior: "auto", block: "start" });
+    }, 400);
+  }
+
+  // Links to a section (top tabs, name, buttons) scroll to it and keep the address in sync.
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    var id = a.getAttribute("href").slice(1);
+    if (ids.indexOf(id) === -1) return;
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      goTo(document.getElementById(id));
+      try { history.replaceState(null, "", "#" + id); } catch (err) {}
     });
-    document.querySelectorAll("nav a").forEach(function (a) {
-      if (a.dataset.view === name) a.setAttribute("aria-current", "page");
+  });
+
+  // Highlight the tab for the section currently in view.
+  var current = null;
+  function mark() {
+    var line = (bar ? bar.getBoundingClientRect().bottom : 0) + 120;
+    var active = ids[0];
+    sections.forEach(function (sec, i) {
+      if (sec.getBoundingClientRect().top <= line) active = ids[i];
+    });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      active = ids[ids.length - 1];
+    }
+    if (active === current) return;
+    current = active;
+    navLinks.forEach(function (a) {
+      if (a.dataset.view === active) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     });
-    document.querySelectorAll("video").forEach(function (v) { v.pause(); });
-    window.scrollTo(0, 0);
   }
-  window.addEventListener("hashchange", show);
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; mark(); });
+  }, { passive: true });
+  window.addEventListener("resize", mark);
+
+  // Opening a link like #projects lands on that section.
+  function fromHash() {
+    var id = (location.hash || "").slice(1);
+    if (ids.indexOf(id) > 0) document.getElementById(id).scrollIntoView({ block: "start" });
+    mark();
+  }
+  window.addEventListener("hashchange", fromHash);
   if (window.claude) {
     document.querySelectorAll(".dl-row").forEach(function (r) { r.hidden = true; });
   }
@@ -832,7 +875,8 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
       }, 400);
     });
   });
-  show();
+  fromHash();
+  window.addEventListener("load", fromHash);
 })();
 </script>
 
