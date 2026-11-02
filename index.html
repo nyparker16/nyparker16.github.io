@@ -119,8 +119,8 @@ main { max-width: var(--wide); margin: 0 auto; padding-block: 48px 80px; }
 .todo ul { margin: 0; padding-left: 1.1em; }
 
 /* About */
-.about-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; align-items: start; }
-.photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-content: start; }
 .photo-slot {
   aspect-ratio: 4 / 5; max-width: 100%; border-radius: 10px; border: 1.5px dashed var(--rule);
   display: grid; place-items: center; font-family: var(--mono); font-size: var(--step--1); color: var(--muted);
@@ -331,8 +331,9 @@ footer a { color: var(--muted); }
       <div class="photo-grid">
         <img class="photo" src="media/photo_portrait.webp" alt="Portrait of Soo-Ho Park in a grey-green polo shirt" width="400" height="500">
         <img class="photo" src="media/photo_evening.webp" alt="Soo-Ho Park and a companion holding red roses on a rainy evening, under string lights" width="720" height="960" loading="lazy">
-        <img class="photo" src="media/photo_beach.webp" alt="Soo-Ho Park smiling in Korean military uniform, kneeling beside a child on a beach" width="720" height="960" loading="lazy">
         <img class="photo" src="media/photo_drums.webp" alt="Soo-Ho Park playing drums on stage under green lights" width="720" height="900" loading="lazy">
+        <img class="photo" src="media/photo_beach.webp" alt="Soo-Ho Park smiling in Korean military uniform, kneeling beside a child on a beach" width="720" height="960" loading="lazy">
+        <img class="photo" src="media/photo_arch.webp" alt="Soo-Ho Park in Korean military uniform with a companion, standing under a flower arch by the ocean" width="720" height="899" loading="lazy">
       </div>
     </div>
   </section>
