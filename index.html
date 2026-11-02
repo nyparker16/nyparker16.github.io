@@ -423,8 +423,9 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
         <section class="r-block" aria-labelledby="r-proof">
           <h2 id="r-proof">Proof of correctness</h2>
           <p>I wrote a formal proof for V0 that contributes to a research paper. In six lemmas and four theorems, it shows that every interleaving of load, store and CAS is linearizable, and that sorting by timestamp always gives a valid linearization. The repository also includes a TLA+ model of the algorithm.</p>
+          <div class="dl-row"><a class="dl" href="media/Soo-Ho_Park_Timestamping_Proof.pdf" download="Soo-Ho_Park_Timestamping_Proof.pdf"><span aria-hidden="true">↓</span> Download the proof (PDF, 20 pages)</a></div>
           <div class="project-links">
-            <a href="https://github.com/nyparker16/Fixed-Linearization-Point-Timestamps" target="_blank" rel="noopener">Code, TLA+ model and full proof on GitHub ↗</a>
+            <a href="https://github.com/nyparker16/Fixed-Linearization-Point-Timestamps" target="_blank" rel="noopener">Code and TLA+ model on GitHub ↗</a>
           </div>
         </section>
       </div>
