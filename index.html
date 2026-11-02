@@ -259,6 +259,14 @@ code { font-family: var(--mono); font-size: 0.88em; }
 .next li { border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; font-size: 0.95rem; }
 
 /* Resume */
+.dl-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.dl {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: var(--step--1); text-decoration: none;
+  color: var(--paper); background: var(--accent); border: 1px solid var(--accent);
+  border-radius: 999px; padding: 8px 16px;
+}
+.dl:hover { filter: brightness(1.08); }
 .tr-pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 64rem; }
 .tr-pages.single { grid-template-columns: minmax(0, 1fr); max-width: 32rem; }
 .tr-pages figure { margin: 0; display: grid; gap: 6px; }
@@ -738,6 +746,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
     <figure class="resume-sheet">
       <img src="media/resume.webp" alt="Resume of Soo-Ho Park: education at UBC and Langara College, experience as a research assistant at UBC Systopia Lab, teaching assistant for CPSC 213 and academic group tutor, projects SkyOS, Cree Learner and the Vancouver Recreational Activities Scheduler, and technical skills." width="1400" height="1812" loading="lazy">
       <figcaption>Resume · November 2026 · phone number available on request</figcaption>
+      <div class="dl-row"><a class="dl" href="media/Soo-Ho_Park_Resume.pdf" download="Soo-Ho_Park_Resume.pdf"><span aria-hidden="true">↓</span> Download resume (PDF)</a></div>
       
     </figure>
 
@@ -762,7 +771,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
         </dl>
       </div>
       <div class="tr-pages single">
-        <figure><img src="media/transcript_ubc-1.webp" alt="UBC unofficial transcript, page 1 of 2: transfer credits and courses from 2024-25 Winter through 2026-27 Winter Term 1, cumulative average 94.3 percent" width="1400" height="1812" loading="lazy"><figcaption>Unofficial transcript</figcaption></figure>
+        <figure><img src="media/transcript_ubc-1.webp" alt="UBC unofficial transcript, page 1 of 2: transfer credits and courses from 2024-25 Winter through 2026-27 Winter Term 1, cumulative average 94.3 percent" width="1400" height="1812" loading="lazy"><figcaption>Unofficial transcript</figcaption><div class="dl-row"><a class="dl" href="media/Soo-Ho_Park_UBC_Unofficial_Transcript.pdf" download="Soo-Ho_Park_UBC_Unofficial_Transcript.pdf"><span aria-hidden="true">↓</span> Download UBC transcript (PDF)</a></div></figure>
       </div>
     </div>
 
@@ -777,7 +786,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
         </dl>
       </div>
       <div class="tr-pages single">
-        <figure><img src="media/transcript_lang-1.webp" alt="Langara College transcript of academic record: 13 courses from Fall 2022 to Spring 2024, all A plus, cumulative GPA 4.33" width="1400" height="1812" loading="lazy"><figcaption>Transcript of Academic Record</figcaption></figure>
+        <figure><img src="media/transcript_lang-1.webp" alt="Langara College transcript of academic record: 13 courses from Fall 2022 to Spring 2024, all A plus, cumulative GPA 4.33" width="1400" height="1812" loading="lazy"><figcaption>Transcript of Academic Record</figcaption><div class="dl-row"><a class="dl" href="media/Soo-Ho_Park_Langara_Transcript.pdf" download="Soo-Ho_Park_Langara_Transcript.pdf"><span aria-hidden="true">↓</span> Download Langara transcript (PDF)</a></div></figure>
       </div>
     </div>
   </section>
@@ -806,6 +815,9 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", show);
+  if (window.claude) {
+    document.querySelectorAll(".dl-row").forEach(function (r) { r.hidden = true; });
+  }
   document.querySelectorAll(".jump").forEach(function (b) {
     b.addEventListener("click", function () {
       var t = document.getElementById(b.dataset.target);
