@@ -188,13 +188,6 @@ figcaption { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); 
   color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: 999px; padding: 4px 11px;
 }
-.db-note {
-  display: grid; gap: 8px; max-width: 46rem;
-  padding: 16px 20px; border-radius: 10px;
-  background: var(--surface); border: 1px solid var(--rule);
-}
-.db-note h3 { font-size: 1rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.db-note p { font-size: 1rem; }
 .title-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .status {
   display: inline-flex; align-items: center; gap: 7px;
@@ -536,8 +529,8 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
           <h3>How it works</h3>
           <ul>
             <li>A headless Selenium scraper works through the city's infinite-scroll search and collects every listing.</li>
-            <li>Dates, times and age ranges are normalized with regex and loaded into Azure SQL.</li>
-            <li>A Flask REST API runs parameterized queries through pyodbc to filter by age overlap, weekday and location.</li>
+            <li>Dates, times and age ranges are normalized with regex and loaded into an <code>activities</code> table in Azure SQL Database, with ages as numbers of years and proper <code>DATE</code> and <code>TIME</code> columns so they can be compared.</li>
+            <li>A Flask REST API queries the database through pyodbc with parameterized SQL, so age overlap, weekday and location filters run in the database. The login comes from environment variables, not the code.</li>
             <li>The React calendar assigns overlapping classes to separate lanes.</li>
           </ul>
         </div>
@@ -553,11 +546,6 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
             <span class="out">→ Sat 11:30–12:00</span>
           </div>
         </div>
-      </div>
-
-      <div class="db-note">
-        <h3>The Azure database</h3>
-        <p>The scraper loads every listing into an <code>activities</code> table in Azure SQL Database, storing ages as numbers of years and dates and times as proper <code>DATE</code> and <code>TIME</code> columns so they can be compared. The Flask API connects with pyodbc and builds parameterized queries, so filters like age overlap, weekdays and locations are matched in SQL rather than in the browser. The database login is read from environment variables instead of being stored in the code.</p>
       </div>
 
       <ul class="chips" aria-label="Technologies">
@@ -619,19 +607,15 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
           <h3>How it works</h3>
           <ul>
             <li>React Native app in TypeScript with tab navigation.</li>
-            <li>A Flask REST API serves word entries from Azure SQL.</li>
-            <li>Pronunciation audio is stored as blobs in Azure Blob Storage.</li>
+            <li>Vocabulary lives in a <code>words</code> table in Azure SQL Database: each word's Cree spelling, pronunciation guide, meaning and a link to its recording.</li>
+            <li>A Flask REST API pulls a word from the database for the app, so new words can be added without releasing a new version.</li>
+            <li>The pronunciation recordings are stored as files in Azure Blob Storage.</li>
           </ul>
         </div>
         <div class="note">
           <h3>My part</h3>
           <p>I built the backend: the Flask API the app calls for each word, the Azure SQL table of word entries, and the Blob Storage container that holds the pronunciation recordings.</p>
         </div>
-      </div>
-
-      <div class="db-note">
-        <h3>The Azure database</h3>
-        <p>Vocabulary lives in a <code>words</code> table in Azure SQL Database, with each word's Cree spelling, pronunciation guide, meaning and a link to its recording. The recordings themselves are stored as files in Azure Blob Storage. The app asks the Flask API for a word, the API pulls one from the database and returns it with its audio link, so new words can be added to the database without releasing a new version of the app.</p>
       </div>
 
       <ul class="chips" aria-label="Technologies">
