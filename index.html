@@ -182,6 +182,19 @@ figcaption { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); 
 .chips li { font-family: var(--mono); font-size: 0.75rem; padding: 4px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
 .project-links { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--mono); font-size: var(--step--1); }
 
+.badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.04em;
+  color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 999px; padding: 4px 11px;
+}
+.db-note {
+  display: grid; gap: 8px; max-width: 46rem;
+  padding: 16px 20px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--rule);
+}
+.db-note h3 { font-size: 1rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.db-note p { font-size: 1rem; }
 .title-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .status {
   display: inline-flex; align-items: center; gap: 7px;
@@ -484,11 +497,11 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
       <div class="project-head">
         <p class="eyebrow">Web app · Aug 2025</p>
         <h2 id="p1">Vancouver Recreation Scheduler</h2>
-        <p class="summary">Finds City of Vancouver recreation programs by age, day and community centre, then lays the ones you pick onto a weekly calendar.</p>
+        <p class="summary">Finds City of Vancouver recreation programs by age, day and community centre, then lays the ones you pick onto a weekly calendar. More than 6,000 listings live in an Azure SQL database behind a Flask API.</p>
         <dl class="strip">
           <div><dt>Team</dt><dd>3 people</dd></div>
           <div><dt>My part</dt><dd>Scraper, data pipeline and search API</dd></div>
-          <div><dt>Data</dt><dd>6,000+ city program listings</dd></div>
+          <div><dt>Database</dt><dd>Azure SQL · 6,000+ listings</dd></div>
         </dl>
       </div>
 
@@ -511,7 +524,7 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
             </figure>
           </div>
         </div>
-        <p class="stage-note">Demo runs on sample activity data.</p>
+        <p class="stage-note">Demo recorded against a local copy of the database with sample activities. The real app reads from Azure SQL.</p>
       </div>
 
       <div class="notes">
@@ -542,6 +555,11 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
         </div>
       </div>
 
+      <div class="db-note">
+        <h3>The Azure database</h3>
+        <p>The scraper loads every listing into an <code>activities</code> table in Azure SQL Database, storing ages as numbers of years and dates and times as proper <code>DATE</code> and <code>TIME</code> columns so they can be compared. The Flask API connects with pyodbc and builds parameterized queries, so filters like age overlap, weekdays and locations are matched in SQL rather than in the browser. The database login is read from environment variables instead of being stored in the code.</p>
+      </div>
+
       <ul class="chips" aria-label="Technologies">
         <li>Python</li><li>Selenium</li><li>Azure SQL</li><li>Flask</li><li>React</li><li>Vite</li><li>Material UI</li>
       </ul>
@@ -552,12 +570,15 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
 
     <article class="project" aria-labelledby="p2">
       <div class="project-head">
-        <p class="eyebrow">Mobile app · SFU StormHacks 2025</p>
-        <h2 id="p2">Cree Learner</h2>
-        <p class="summary">A mobile app for learning Plains Cree vocabulary: tap syllabics to hear them, memorize words with audio pronunciation, and get your speaking scored.</p>
+        <p class="eyebrow">Mobile app · Oct 2025</p>
+        <div class="title-row">
+          <h2 id="p2">Cree Learner</h2>
+          <span class="badge">Hackathon project</span>
+        </div>
+        <p class="summary">Built in 24 hours with a team at the SFU StormHacks 2025 hackathon. A mobile app for learning Plains Cree vocabulary: tap syllabics to hear them, memorize words with audio pronunciation, and get your speaking scored.</p>
         <dl class="strip">
-          <div><dt>Built in</dt><dd>24 hours</dd></div>
-          <div><dt>My part</dt><dd>Flask REST API and Azure data</dd></div>
+          <div><dt>Event</dt><dd>SFU StormHacks 2025, 24 hours</dd></div>
+          <div><dt>My part</dt><dd>Flask API and Azure database</dd></div>
           <div><dt>Platforms</dt><dd>iOS and Android</dd></div>
         </dl>
       </div>
@@ -607,6 +628,11 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
           <h3>My part</h3>
           <p>I built the backend: the Flask API the app calls for each word, the Azure SQL table of word entries, and the Blob Storage container that holds the pronunciation recordings.</p>
         </div>
+      </div>
+
+      <div class="db-note">
+        <h3>The Azure database</h3>
+        <p>Vocabulary lives in a <code>words</code> table in Azure SQL Database, with each word's Cree spelling, pronunciation guide, meaning and a link to its recording. The recordings themselves are stored as files in Azure Blob Storage. The app asks the Flask API for a word, the API pulls one from the database and returns it with its audio link, so new words can be added to the database without releasing a new version of the app.</p>
       </div>
 
       <ul class="chips" aria-label="Technologies">
