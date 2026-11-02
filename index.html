@@ -811,7 +811,12 @@ std::pair&lt;T, int&gt; TimestampedAtomic&lt;T&gt;::load() {
       var t = document.getElementById(b.dataset.target);
       if (!t) return;
       var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var start = window.scrollY;
       t.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+      // Some browsers ignore smooth scrolling; jump straight there if nothing moved.
+      setTimeout(function () {
+        if (window.scrollY === start) t.scrollIntoView({ behavior: "auto", block: "start" });
+      }, 400);
     });
   });
   show();
